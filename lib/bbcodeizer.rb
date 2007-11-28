@@ -69,16 +69,9 @@ module BBCodeizer
 
     def apply_tags(string, *tags)
       tags.each do |tag|
-        while_true { string.sub!(*Tags[tag]) }
+        string.gsub!(*Tags[tag])
       end
     end
     alias_method :apply_tag, :apply_tags
-
-    # there's no good way to do the C equivalent of "while(foo());"
-    # the closest thing is "{ } while foo", which is wrapped here because
-    # that looks pretty odd.
-    def while_true(&block)
-      { } while yield
-    end
   end
 end
