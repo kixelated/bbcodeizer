@@ -65,7 +65,8 @@ module BBCodeizer
     # Parses all bbcode in +text+ and returns a new HTML-formatted string.
     def bbcodeize(text)
       text = text.dup
-      TagList.each do |tag|
+      @deactivated ||= Array.new
+      (TagList - @deactivated).each do |tag|
         if Tags.has_key?(tag)
           apply_tag(text, tag)
         else
@@ -80,7 +81,14 @@ module BBCodeizer
 
     # Configuration option to deactivate particular +tags+.
     def deactivate(*tags)
-      tags.each { |t| TagList.delete(t) }
+      @deactivated ||= Array.new
+      @deactivated += tags
+    end
+
+    # Configuration option to reactivate particular +tags+.
+    def activate(*tags)
+      @deactivated ||= Array.new
+      @deactivated -= tags
     end
 
     # Configuration option to change the replacement string used for a particular +tag+. The source

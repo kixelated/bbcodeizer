@@ -105,4 +105,20 @@ class BbcodeizerTest < Test::Unit::TestCase
       "<span style=\"color: red\">Red Text</span>",
       bbcodeize("[color=red]Red Text[/color]"))
   end
+
+  def test_deactivation
+    BBCodeizer.deactivate(:bold)
+    assert_equal(
+      "I am [b]really[/b] happy!",
+      bbcodeize("I am [b]really[/b] happy!"))
+    BBCodeizer.activate(:bold) # for future tests
+  end
+
+  def test_activation
+    BBCodeizer.deactivate(:bold)
+    BBCodeizer.activate(:bold)
+    assert_equal(
+      "I am <strong>really</strong> happy!",
+      bbcodeize("I am [b]really[/b] happy!"))
+  end
 end
