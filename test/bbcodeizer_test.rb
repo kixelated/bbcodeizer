@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'bbcodeize_helper'
+require 'bbcodeizer_helper'
 
 class BbcodeizerTest < Test::Unit::TestCase
   include BBCodeizeHelper
