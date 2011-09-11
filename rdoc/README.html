@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>File: README [BBCodeizer]</title>
+
+  <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet" />
+
+  <script src="./js/jquery.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript"
+    charset="utf-8"></script>
+</head>
+
+<body class="file">
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./BBCodeizeHelper.html">BBCodeizeHelper</a></li>
+        
+          <li><a href="./Bbcodeizer.html">Bbcodeizer</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    
+<h2>BBCodeizer</h2>
+
+<p>BBCodeizer is a gem used to translate BBCode to HTML. The main interface is
+provided through the helper method “bbcodeize.” Use of it is as simple as
+passing a string to bbcodeize:</p>
+
+<pre>&lt;%= bbcodeize post.body %&gt;</pre>
+
+<p>You can also invoke the BBCodeizer directly without the helper:</p>
+
+<pre>render :text =&gt; BBCodeizer.bbcodeize(post.body)</pre>
+
+<p>All settings are centralized so you can very quickly deactivate any tag or
+modify the HTML that is generated. You can modify these settings by adding
+lines to the end of your environment.rb. For example:</p>
+
+<pre># deactivate [color], [size], and [code] tags
+BBCodeizer.deactivate(:color, :size, :code)
+
+# use &lt;b&gt; instead of &lt;strong&gt;
+BBCodeizer.replace_using(:bold, '&lt;b&gt;\1&lt;/b&gt;')</pre>
+
+<p>These changes should be considered one-time configuration, e.g. tags cannot
+be deactivated then activated again.</p>
+
+<h2>Warning</h2>
+
+<p>While BBCodeizer does some validation (see below), you should be aware it
+is possible to create unsafe HTML in the wrong hands (for example, invoking
+Javascript using the [url] tag). It is highly recommended you run the
+resulting HTML through a sanity checker such as WhiteList:</p>
+
+<pre>http://svn.techno-weenie.net/projects/plugins/white_list/</pre>
+
+<p>Once installed, the following is a helper method that will produce nicely
+formatted, safe HTML:</p>
+
+<pre>def format_text(text)
+  white_list(simple_format(auto_link(bbcodeize(h(text)))))
+end</pre>
+
+<h2>Supported Tags</h2>
+
+<p>BBCodeizer currently supports the following tags. The default HTML
+expansion is documented here.</p>
+
+<pre>[u]text[/u]
+
+  &lt;u&gt;text&lt;/u&gt;
+
+[b]text[/b]
+
+  &lt;strong&gt;text&lt;/strong&gt;
+
+[i]text[/i]
+
+  &lt;em&gt;text&lt;/em&gt;
+
+[img]http://example.com/image.gif[/img]
+
+  &lt;img src=&quot;http://example.com/image.gif&quot; /&gt;
+
+[email=joe@example.com]Joe Example[/email]
+
+  &lt;a href=&quot;mailto:joe@example.com&quot;&gt;Joe Example&lt;/a&gt;
+
+[email]joe@example.com[/email]
+
+ &lt;a href=&quot;mailto:joe@example.com&quot;&gt;joe@example.com&lt;/a&gt;
+
+[code]bbcodeize(string)[/code]
+
+  &lt;pre&gt;bbcodeize(string)&lt;/pre&gt;
+
+[url=http://www.google.com]Google[/url]
+
+  &lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;
+
+[url]http://www.google.com[/url]
+
+  &lt;a href=&quot;http://www.google.com&quot;&gt;http://www.google.com&lt;/a&gt;
+
+[quote=&quot;Shakespeare&quot;]To be or not to be[/quote]
+
+  &lt;blockquote&gt;&lt;cite&gt;Shakespeare wrote:&lt;/cite&gt;&lt;br /&gt;To be or not to
+be&lt;/blockquote&gt;
+
+[quote]That is the question[/quote]
+
+  &lt;blockquote&gt;That is the question&lt;/blockquote&gt;
+
+[size=32]Big Text[/size]
+
+  &lt;span style=&quot;font-size: 32px&quot;&gt;Big Text&lt;/span&gt;
+
+[color=red]Red Text[/color] [color=#ABCDEF]Alphabet-colored Text[/color]
+
+  &lt;span style=&quot;color: red&quot;&gt;Red Text&lt;/span&gt;
+  &lt;span style=&quot;color: #ABCDEF&quot;&gt;Alphabet Colored Text&lt;/span&gt;</pre>
+
+<h2>Validation</h2>
+
+<p>BBCodeizer aims to produce HTML that will not break your site - all opening
+tags must have a closing tag or they will not be replaced (unmatched tags
+are left as-is). All [code] and [quote] tags are left entirely untouched if
+there is any mismatch with either of these. All other tags will replace as
+many as possible and leave the remaining unmatched tags as-is.</p>
+
+<p>BBCodeizer attempts to produce XHTML-compliant markup, however, misuse of
+nesting tags is not validated or corrected. For example:</p>
+
+<pre>[b]bold [u]bold + underline[/b] underline[/u]</pre>
+
+<p>Will produce the following HTML:</p>
+
+<pre>&lt;strong&gt;bold &lt;u&gt;bold + underline&lt;/strong&gt; underline&lt;/u&gt;</pre>
+
+<p>Colors in the [color] tag are not validated - any string can be used.
+Strings containing semicolons are not allowed to prevent users from adding
+additional style rules.</p>
+
+<p>Sizes used in the [size] tag are validated - only 1 or 2 digit numbers are
+accepted.</p>
+<hr style="height: 10px">
+
+<p>Copyright © 2006 Jonathan Dance / Agora Games Copyright © 2011 Luke Curley
+Distributed under the MIT license</p>
+
+  </div>
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+</body>
+</html>
+
