@@ -1,6 +1,6 @@
-== BBCodeizer Plugin
+== BBCodeizer
 
-BBCodeizer is a Rails plugin to translate BBCode to HTML. The main interface
+BBCodeizer is a gem used to translate BBCode to HTML. The main interface
 is provided through the helper method "bbcodeize." Use of it is as simple as
 passing a string to bbcodeize:
 
@@ -9,17 +9,17 @@ passing a string to bbcodeize:
 You can also invoke the BBCodeizer directly without the helper:
 
   render :text => BBCodeizer.bbcodeize(post.body)
-  
-All settings are centralized so you can very quickly deactivate any tag or 
+
+All settings are centralized so you can very quickly deactivate any tag or
 modify the HTML that is generated. You can modify these settings by adding
 lines to the end of your environment.rb. For example:
 
   # deactivate [color], [size], and [code] tags
   BBCodeizer.deactivate(:color, :size, :code)
-  
+
   # use <b> instead of <strong>
   BBCodeizer.replace_using(:bold, '<b>\1</b>')
-  
+
 These changes should be considered one-time configuration, e.g. tags
 cannot be deactivated then activated again.
 
@@ -104,7 +104,7 @@ BBCodeizer aims to produce HTML that will not break your site - all opening
 tags must have a closing tag or they will not be replaced (unmatched tags are
 left as-is). All [code] and [quote] tags are left entirely untouched if there
 is any mismatch with either of these. All other tags will replace as many as
-possible and leave the remaining unmatched tags as-is. 
+possible and leave the remaining unmatched tags as-is.
 
 BBCodeizer attempts to produce XHTML-compliant markup, however, misuse of
 nesting tags is not validated or corrected. For example:
@@ -124,4 +124,5 @@ accepted.
 
 -----------------
 Copyright (c) 2006 Jonathan Dance / Agora Games
+Copyright (c) 2011 Luke Curley
 Distributed under the MIT license
