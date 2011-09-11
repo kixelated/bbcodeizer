@@ -1,4 +1,4 @@
-module BBCodeizer  
+module BBCodeizer
   class << self
 
     #:nodoc:
@@ -23,7 +23,7 @@ module BBCodeizer
 
     # Tags in this list are invoked. To deactivate a particular tag, call BBCodeizer.deactivate.
     # These names correspond to either names above or methods in this module.
-    TagList = [ :bold, :italic, :underline, :email_with_name, :email_sans_name, 
+    TagList = [ :bold, :italic, :underline, :email_with_name, :email_sans_name,
                 :url_with_title, :url_sans_title, :image, :size, :color,
                 :code, :quote ]
 
@@ -50,7 +50,7 @@ module BBCodeizer
     def replace_using(tag, string)
       Tags[tag][1] = string
     end
-    
+
   private
 
     def code(string)
@@ -59,7 +59,7 @@ module BBCodeizer
         apply_tags(string, :start_code, :end_code)
       end
     end
-  
+
     def quote(string)
       # quotes must match, else don't do any replacing
       if string.scan(Tags[:start_quote].first).size == string.scan(Tags[:end_quote].first).size
