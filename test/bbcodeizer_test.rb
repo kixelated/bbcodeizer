@@ -6,7 +6,7 @@ class BbcodeizerTest < Test::Unit::TestCase
 
   def test_quote_with_cite
     assert_equal(
-      "<blockquote><cite>JD wrote:</cite><br />\nBBCode is great!\n</blockquote>",
+      "<blockquote><p><cite>\"JD\" wrote:</cite></p>\nBBCode is great!\n</blockquote>",
       bbcodeize("[quote=\"JD\"]\nBBCode is great!\n[/quote]"))
   end
 
@@ -24,7 +24,7 @@ class BbcodeizerTest < Test::Unit::TestCase
 
   def test_code
     assert_equal(
-      "<pre>\ncode goes here\n</pre>",
+      "<pre><code>\ncode goes here\n</code></pre>",
       bbcodeize("[code]\ncode goes here\n[/code]"))
   end
 
@@ -72,7 +72,7 @@ class BbcodeizerTest < Test::Unit::TestCase
 
   def test_image
     assert_equal(
-      "<img src=\"http://example.com/example.gif\" />",
+      "<img src=\"http://example.com/example.gif\" alt=\"http://example.com/example.gif\" />",
       bbcodeize("[img]http://example.com/example.gif[/img]"))
   end
 
