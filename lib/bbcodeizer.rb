@@ -62,6 +62,11 @@ module BBCodeizer
                 :metacafe, :yahoovid, :flickr, :gametrailers, :slideshare, :funnyordie,
                 :atomfilms, :vimeo, :li, :list, :current ]
 
+    TagGroups = { :video => [ :youtube, :googlevid, :flash, :superdeluxe, :comedycentral, :revver,
+                            :myspacetv, :collegehumor, :hulu, :metacafe, :yahoovid, :gametrailers,
+                            :funnyordie, :atomfilms, :vimeo ],
+                  :image => [ :image, :flickr ] }
+
     # Parses all bbcode in +text+ and returns a new HTML-formatted string.
     def bbcodeize(text)
       text = text.dup
@@ -82,13 +87,19 @@ module BBCodeizer
     # Configuration option to deactivate particular +tags+.
     def deactivate(*tags)
       @deactivated ||= Array.new
-      @deactivated += tags
+      @deactivated = tags.inject(@deactivated) do |deactivated, tag|
+        tag = TagGroups[tag] if TagGroups.key?(tag)
+        deactivated + Array(tag)
+      end
     end
 
     # Configuration option to reactivate particular +tags+.
     def activate(*tags)
       @deactivated ||= Array.new
-      @deactivated -= tags
+      @deactivated = tags.inject(@deactivated) do |deactivated, tag|
+        tag = TagGroups[tag] if TagGroups.key?(tag)
+        deactivated - Array(tag)
+      end
     end
 
     # Configuration option to change the replacement string used for a particular +tag+. The source
