@@ -70,6 +70,15 @@ class BbcodeizerTest < Test::Unit::TestCase
       bbcodeize("My homepage is [url]http://www.example.com[/url]."))
   end
 
+  def test_auto_link
+    assert_equal(
+      "Check out this site: <a href=\"http://google.com\">http://google.com</a>",
+      bbcodeize("Check out this site: http://google.com"))
+    assert_equal(
+      "<b><a href=\"http://google.com\">http://google.com</a></b>",
+      bbcodeize("<b>http://google.com</b>"))
+  end
+
   def test_image
     assert_equal(
       "<img src=\"http://example.com/example.gif\" alt=\"http://example.com/example.gif\" />",
@@ -104,12 +113,6 @@ class BbcodeizerTest < Test::Unit::TestCase
     assert_equal(
       "<span style=\"color: red\">Red Text</span>",
       bbcodeize("[color=red]Red Text[/color]"))
-  end
-
-  def test_auto_link
-    assert_equal(
-      "Check out this site: <a href=\"http://google.com\">http://google.com</a>",
-      bbcodeize("Check out this site: http://google.com"))
   end
 
   def test_disable
