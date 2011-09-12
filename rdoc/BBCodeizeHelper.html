@@ -137,7 +137,7 @@
           
           <div class="method-heading">
             <span class="method-name">bbcodeize</span><span
-              class="method-args">(text)</span>
+              class="method-args">(text, options = Hash.new)</span>
             <span class="method-click-advice">click to toggle source</span>
           </div>
           
@@ -151,8 +151,8 @@
             <div class="method-source-code" id="bbcodeize-source">
 <pre>
 <span class="ruby-comment"># File lib/bbcodeizer_helper.rb, line 5</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">bbcodeize</span>(<span class="ruby-identifier">text</span>)
-  <span class="ruby-constant">BBCodeizer</span>.<span class="ruby-identifier">bbcodeize</span>(<span class="ruby-identifier">text</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">bbcodeize</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>)
+  <span class="ruby-constant">BBCodeizer</span>.<span class="ruby-identifier">bbcodeize</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">options</span>)
 <span class="ruby-keyword">end</span></pre>
             </div><!-- bbcodeize-source -->
             
