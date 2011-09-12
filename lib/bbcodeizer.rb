@@ -68,10 +68,14 @@ module BBCodeizer
                   :image => [ :image, :flickr ] }
 
     # Parses all bbcode in +text+ and returns a new HTML-formatted string.
-    def bbcodeize(text)
+    def bbcodeize(text, options = Hash.new)
       text = text.dup
-      @deactivated ||= Array.new
-      (TagList - @deactivated).each do |tag|
+
+      disabled = Array.new
+      disabled += @deactivated if @deactivated
+      disabled += decode_tags(options[:disabled]) if options[:disabled]
+
+      (TagList - disabled).each do |tag|
         if Tags.has_key?(tag)
           apply_tag(text, tag)
         else
@@ -87,19 +91,13 @@ module BBCodeizer
     # Configuration option to deactivate particular +tags+.
     def deactivate(*tags)
       @deactivated ||= Array.new
-      @deactivated = tags.inject(@deactivated) do |deactivated, tag|
-        tag = TagGroups[tag] if TagGroups.key?(tag)
-        deactivated + Array(tag)
-      end
+      @deactivated += decode_tags(*tags)
     end
 
     # Configuration option to reactivate particular +tags+.
     def activate(*tags)
       @deactivated ||= Array.new
-      @deactivated = tags.inject(@deactivated) do |deactivated, tag|
-        tag = TagGroups[tag] if TagGroups.key?(tag)
-        deactivated - Array(tag)
-      end
+      @deactivated -= decode_tags(*tags)
     end
 
     # Configuration option to change the replacement string used for a particular +tag+. The source
@@ -156,6 +154,13 @@ module BBCodeizer
       end
     end
     alias_method :apply_tag, :apply_tags
+
+    def decode_tags(*tags)
+      tags.inject(Array.new) do |decoded_tags, tag|
+        decoded_tag = TagGroups.key?(tag) ? TagGroups[tag] : tag
+        decoded_tags + Array(decoded_tag)
+      end
+    end
 
     # http://stackoverflow.com/questions/88311/how-best-to-generate-a-random-string-in-ruby
     def random_string

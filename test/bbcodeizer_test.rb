@@ -106,6 +106,15 @@ class BbcodeizerTest < Test::Unit::TestCase
       bbcodeize("[color=red]Red Text[/color]"))
   end
 
+  def test_disable
+    assert_equal(
+      "I am [b]really[/b] happy!",
+      bbcodeize("I am [b]really[/b] happy!", :disabled => [ :bold ]))
+    assert_equal(
+      "I am <strong>really</strong> happy!",
+      bbcodeize("I am [b]really[/b] happy!", :disabled => [ :video ]))
+  end
+
   def test_deactivation
     BBCodeizer.deactivate(:bold)
     assert_equal(
