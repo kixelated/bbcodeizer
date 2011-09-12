@@ -50,6 +50,7 @@ module BBCodeizer
       :grooveshark           => [ /\[grooveshark\](.+?)\[\/grooveshark\]/i, '<object width="250" height="40"> <param name="movie" value="http://listen.grooveshark.com/songWidget.swf"></param> <param name="wmode" value="window"></param> <param name="allowScriptAccess" value="always"></param> <param name="flashvars" value="hostname=cowbell.grooveshark.com&widgetID=\1&style=grass&p=0"></param> <embed src="http://listen.grooveshark.com/songWidget.swf" type="application/x-shockwave-flash" width="250" height="40" flashvars="hostname=cowbell.grooveshark.com&widgetID=\1&style=grass&p=0" allowScriptAccess="always" wmode="window"></embed></object>'],
       :sup                   => [ /\[sup\](.+?)\[\/sup\]/im, '<sup>\1</sup>' ],
       :sub                   => [ /\[sub\](.+?)\[\/sub\]/im, '<sub>\1</sub>' ],
+      :auto_link             => [ /(\A|\s)((https?:\/\/|www\.)[^\s<]+)/, '\1<a href="\2">\2</a>' ],
     }
 
     # Tags in this list are invoked. To deactivate a particular tag, call BBCodeizer.deactivate.
@@ -60,7 +61,7 @@ module BBCodeizer
                 :code, :quote, :youtube, :googlevid, :flash, :spoiler, :nsfw, :hide, :mp3,
                 :superdeluxe, :comedycentral, :revver, :myspacetv, :collegehumor, :hulu,
                 :metacafe, :yahoovid, :flickr, :gametrailers, :slideshare, :funnyordie,
-                :atomfilms, :vimeo, :li, :list, :current ]
+                :atomfilms, :vimeo, :li, :list, :current, :auto_link ]
 
     TagGroups = { :video => [ :youtube, :googlevid, :flash, :superdeluxe, :comedycentral, :revver,
                             :myspacetv, :collegehumor, :hulu, :metacafe, :yahoovid, :gametrailers,

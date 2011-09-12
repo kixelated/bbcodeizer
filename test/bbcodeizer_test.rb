@@ -106,6 +106,12 @@ class BbcodeizerTest < Test::Unit::TestCase
       bbcodeize("[color=red]Red Text[/color]"))
   end
 
+  def test_auto_link
+    assert_equal(
+      "Check out this site: <a href=\"http://google.com\">http://google.com</a>",
+      bbcodeize("Check out this site: http://google.com"))
+  end
+
   def test_disable
     assert_equal(
       "I am [b]really[/b] happy!",
