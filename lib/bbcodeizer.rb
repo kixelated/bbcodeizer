@@ -21,8 +21,8 @@ module BBCodeizer
       :strike                => [ /\[strike\](.+?)\[\/strike\]/im, '<del>\1</del>' ],
       :email_with_name       => [ /\[email=(.+?)\](.+?)\[\/email\]/i, '<a href="mailto:\1">\2</a>' ],
       :email_sans_name       => [ /\[email\](.+?)\[\/email\]/i, '<a href="mailto:\1">\1</a>' ],
-      :url_with_title        => [ /\[url=(.+?)\](.+?)\[\/url\]/i, '<a href="\1">\2</a>' ],
-      :url_sans_title        => [ /\[url\](.+?)\[\/url\]/i, '<a href="\1">\1</a>' ],
+      :url_with_title        => [ /\[url=(.+?)\](.+?)\[\/url\]/i, '<a href="\1" target="_blank">\2</a>' ],
+      :url_sans_title        => [ /\[url\](.+?)\[\/url\]/i, '<a href="\1" target="_blank">\1</a>' ],
       :image                 => [ /\[img\](.+?)\[\/img\]/i, '<img src="\1" alt="\1" />' ],
       :size                  => [ /\[size=(\d{1,2})\](.+?)\[\/size\]/im, '<span style="font-size: \1px">\2</span>' ],
       :color                 => [ /\[color=([^;]+?)\](.+?)\[\/color\]/im, '<span style="color: \1">\2</span>' ],
@@ -50,7 +50,7 @@ module BBCodeizer
       :grooveshark           => [ /\[grooveshark\](.+?)\[\/grooveshark\]/i, '<object width="250" height="40"> <param name="movie" value="http://listen.grooveshark.com/songWidget.swf"></param> <param name="wmode" value="window"></param> <param name="allowScriptAccess" value="always"></param> <param name="flashvars" value="hostname=cowbell.grooveshark.com&widgetID=\1&style=grass&p=0"></param> <embed src="http://listen.grooveshark.com/songWidget.swf" type="application/x-shockwave-flash" width="250" height="40" flashvars="hostname=cowbell.grooveshark.com&widgetID=\1&style=grass&p=0" allowScriptAccess="always" wmode="window"></embed></object>'],
       :sup                   => [ /\[sup\](.+?)\[\/sup\]/im, '<sup>\1</sup>' ],
       :sub                   => [ /\[sub\](.+?)\[\/sub\]/im, '<sub>\1</sub>' ],
-      :auto_link             => [ /(\A|\s|>)((https?:\/\/|www\.)[^\s<]+)/, '\1<a href="\2">\2</a>' ],
+      :auto_link             => [ /(\A|\s|>)((https?:\/\/|www\.)[^\s<]+)/, '\1<a href="\2" target="_blank">\2</a>' ],
     }
 
     # Tags in this list are invoked. To deactivate a particular tag, call BBCodeizer.deactivate.

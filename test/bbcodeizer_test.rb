@@ -60,22 +60,25 @@ class BbcodeizerTest < Test::Unit::TestCase
 
   def test_url_with_title
     assert_equal(
-      "Check out <a href=\"http://www.rubyonrails.com\">Ruby on Rails</a>!",
+      "Check out <a href=\"http://www.rubyonrails.com\" target=\"_blank\">Ruby on Rails</a>!",
       bbcodeize("Check out [url=http://www.rubyonrails.com]Ruby on Rails[/url]!"))
   end
 
   def test_url_sans_title
     assert_equal(
-      "My homepage is <a href=\"http://www.example.com\">http://www.example.com</a>.",
+      "My homepage is <a href=\"http://www.example.com\" target=\"_blank\">http://www.example.com</a>.",
       bbcodeize("My homepage is [url]http://www.example.com[/url]."))
   end
 
   def test_auto_link
     assert_equal(
-      "Check out this site: <a href=\"http://google.com\">http://google.com</a>",
+      "Check out this site: <a href=\"http://google.com\" target=\"_blank\">http://google.com</a>",
       bbcodeize("Check out this site: http://google.com"))
+  end
+
+  def test_auto_link_nested
     assert_equal(
-      "<b><a href=\"http://google.com\">http://google.com</a></b>",
+      "<b><a href=\"http://google.com\" target=\"_blank\">http://google.com</a></b>",
       bbcodeize("<b>http://google.com</b>"))
   end
 
